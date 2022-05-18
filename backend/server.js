@@ -8,11 +8,11 @@ app.get("/", (req, res) => {
     res.send("API is working");
 });
 
-app.get("/api/chat", (req, res) => {
+app.get("/api/chats", (req, res) => {
     res.send(chats);
 });
 
-app.get("/api/chat/:id", (req, res) => {
+app.get("/api/chats/:id", (req, res) => {
     const chat = chats.find((chat) => chat._id === req.params.id);
     if (chat) {
         res.send(chat);
