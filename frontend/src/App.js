@@ -8,10 +8,10 @@ function App() {
     return (
         <div className="App">
             {/* <Button colorScheme="blue">Button</Button> */}
-
+            {/* <Homepage /> */}
             <Routes>
-                <Route path="/" component={<Homepage />} />
-                <Route path="/chats" component={<ChatPage />} />
+                <Route path="/" element={<Homepage />} />
+                <Route path="/chats" element={<ChatPage />} />
             </Routes>
         </div>
     );
