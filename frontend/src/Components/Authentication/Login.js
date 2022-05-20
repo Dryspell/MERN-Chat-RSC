@@ -45,6 +45,28 @@ const Login = () => {
                     </InputRightElement>
                 </InputGroup>
             </FormControl>
+            <Button
+                colorScheme="blue"
+                width="100%"
+                color="white"
+                onClick={handleSubmit}
+                style={{ marginTop: 15 }}
+            >
+                Login
+            </Button>
+            <Button
+                colorScheme="red"
+                width="100%"
+                color="white"
+                onClick={() => {
+                    setName("Guest");
+                    setPassword("12guest34");
+                    handleSubmit();
+                }}
+                style={{ marginTop: 15 }}
+            >
+                Chat as a Guest
+            </Button>
         </VStack>
     );
 };
