@@ -41,4 +41,33 @@ const registerUser = expressAsyncHandler(async (req, res) => {
     }
 });
 
-module.exports = { registerUser };
+const authUser = expressAsyncHandler(async (req, res) => {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+    if (user && (await user.matchPassword(password))) {
+        res.status(200).json({
+            status: "success",
+            data: {
+                user,
+            },
+            token: generateToken(user._id),
+        });
+    } else {
+        if (!user) {
+            return res.status(400).json({
+                status: "error",
+                message: "User does not exist",
+            });
+        } else
+            return res.status(400).json({
+                status: "error",
+                message: "Incorrect password",
+            });
+    }
+});
+
+module.exports = {
+    registerUser,
+    authUser,
+};
