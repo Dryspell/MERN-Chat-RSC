@@ -7,8 +7,6 @@ import ChatPage from "./Pages/ChatPage";
 function App() {
     return (
         <div className="App">
-            {/* <Button colorScheme="blue">Button</Button> */}
-            {/* <Homepage /> */}
             <Routes>
                 <Route path="/" element={<Homepage />} />
                 <Route path="/chats" element={<ChatPage />} />
