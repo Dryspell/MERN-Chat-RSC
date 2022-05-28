@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 const chatModel = mongoose.Schema(
     {
-        _id: mongoose.Schema.Types.ObjectId,
         isGroupChat: { type: Boolean, default: false },
         users: [
             {
