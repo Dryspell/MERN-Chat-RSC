@@ -9,12 +9,12 @@ import {
     Text,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Login from "../Components/Authentication/Login";
 import Register from "../Components/Authentication/Register";
 
 const Homepage = () => {
-    const navigate = Navigate();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("userInfo"));
