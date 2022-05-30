@@ -27,7 +27,7 @@ const UserListItem = ({ user, handleFunction }) => {
                 name={user.name}
                 src={user.pic}
             />
-            <Box>
+            <Box overflow={"hidden"}>
                 <Text>{user.name}</Text>
                 <Text fontSize={"xs"}>
                     <b>Email: </b>

@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { getSender } from "../config/chatLogics";
 import { ChatState } from "../Context/ChatProvider";
 import ChatLoading from "./ChatLoading";
+import GroupChatModal from "./Miscellaneous/GroupChatModal";
 
 const MyChats = () => {
     const { selectedChat, setSelectedChat, user, chats, setChats } =
@@ -12,32 +13,33 @@ const MyChats = () => {
     const [loggedUser, setLoggedUser] = useState();
     const toast = useToast();
 
-    const fetchChats = async () => {
-        try {
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${user.token}`,
-                },
-            };
-            const { data } = await axios.get("/api/chat", config);
-            setChats(data);
-            console.log(data);
-        } catch (error) {
-            toast({
-                title: "Error Occurred!",
-                status: "error",
-                description: "Failed to Load Chats",
-                duration: 5000,
-                isClosable: true,
-                position: "bottom",
-            });
-        }
-    };
-
     useEffect(() => {
         setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
+
+        const fetchChats = async () => {
+            try {
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${user.token}`,
+                    },
+                };
+                const { data } = await axios.get("/api/chat", config);
+                setChats(data);
+                console.log(data);
+            } catch (error) {
+                toast({
+                    title: "Error Occurred!",
+                    status: "error",
+                    description: "Failed to Load Chats",
+                    duration: 5000,
+                    isClosable: true,
+                    position: "bottom",
+                });
+            }
+        };
+
         fetchChats();
-    }, []);
+    }, [setChats, toast, user]);
 
     return (
         <Box
@@ -61,13 +63,15 @@ const MyChats = () => {
                 w="100%"
             >
                 My Chats
-                <Button
-                    display="flex"
-                    fontSize={{ base: "17px", md: "10px", lg: "17px" }}
-                    rightIcon={<AddIcon />}
-                >
-                    Create New Chat
-                </Button>
+                <GroupChatModal>
+                    <Button
+                        display="flex"
+                        fontSize={{ base: "17px", md: "10px", lg: "17px" }}
+                        rightIcon={<AddIcon />}
+                    >
+                        Create New Chat
+                    </Button>
+                </GroupChatModal>
             </Box>
             <Box
                 display="flex"
