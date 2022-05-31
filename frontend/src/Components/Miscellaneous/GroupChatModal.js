@@ -1,5 +1,4 @@
 import {
-    Box,
     Button,
     FormControl,
     Input,
@@ -17,7 +16,6 @@ import {
 import axios from "axios";
 import React, { useState } from "react";
 import { ChatState } from "../../Context/ChatProvider";
-import UserBadgeItem from "../UserAvatar/UserBadgeItem";
 import UserListItem from "../UserAvatar/UserListItem";
 
 const GroupChatModal = ({ children }) => {
@@ -63,75 +61,8 @@ const GroupChatModal = ({ children }) => {
             });
         }
     };
-    const handleGroup = (userToAdd) => {
-        if (selectedUsers.includes(userToAdd)) {
-            toast({
-                title: "User Already Added",
-                description: "User Already Added",
-                status: "warning",
-                duration: 5000,
-                isClosable: true,
-                position: "bottom",
-            });
-            return;
-        }
-        setSelectedUsers([...selectedUsers, userToAdd]);
-    };
-
-    const handleSubmit = async () => {
-        if (!groupChatName || !selectedUsers) {
-            toast({
-                title: "Please enter a group name and select users",
-                status: "warning",
-                duration: 5000,
-                isClosable: true,
-                position: "bottom",
-            });
-            return;
-        }
-
-        try {
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${user.token}`,
-                },
-            };
-
-            const { data } = await axios.post(
-                "/api/chat/group",
-                {
-                    chatName: groupChatName,
-                    users: JSON.stringify(selectedUsers.map((u) => u._id)),
-                },
-                config
-            );
-
-            setChats([data, ...chats]);
-            onClose();
-            toast({
-                title: "New Group Chat Created Successfully",
-                status: "success",
-                duration: 5000,
-                isClosable: true,
-                position: "bottom",
-            });
-        } catch (error) {
-            toast({
-                title: "Error Occured!",
-                description: "Failed to Create Group Chat",
-                status: "error",
-                duration: 5000,
-                isClosable: true,
-                position: "bottom",
-            });
-        }
-    };
-
-    const handleDelete = (userToDelete) => {
-        setSelectedUsers(
-            selectedUsers.filter((user) => user._id !== userToDelete._id)
-        );
-    };
+    const handleGroup = () => {};
+    const handleSubmit = () => {};
 
     return (
         <>
@@ -170,21 +101,11 @@ const GroupChatModal = ({ children }) => {
                                 onChange={(e) => handleSearch(e.target.value)}
                             />
                         </FormControl>
-                        <Box w="100%" display={"flex"} flexWrap={"wrap"}>
-                            {selectedUsers.map((u) => (
-                                // console.log(u),
-                                <UserBadgeItem
-                                    key={u._id}
-                                    user={u}
-                                    handleFunction={() => handleDelete(u)}
-                                />
-                            ))}
-                        </Box>
-
+                        {/* TODO: SELECTED USERS */}
                         {loading ? (
                             <div>
                                 loading
-                                <Spinner pl={3} ml="auto" display="flex" />
+                                <Spinner ml="auto" display="flex" />
                             </div>
                         ) : (
                             searchResult?.slice(0, 4).map((user) => (
