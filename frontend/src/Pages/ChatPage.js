@@ -7,7 +7,8 @@ import ChatBox from "../Components/ChatBox";
 
 const Chatpage = () => {
     // const [fetchAgain, setFetchAgain] = useState(false);
-    const { user } = ChatState();
+    const { userInfo } = ChatState();
+    const user = userInfo?.data.user;
 
     return (
         <div style={{ width: "100%" }}>

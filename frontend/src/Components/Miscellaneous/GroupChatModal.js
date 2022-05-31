@@ -28,7 +28,7 @@ const GroupChatModal = ({ children }) => {
 
     const toast = useToast();
 
-    const { user, chats, setChats } = ChatState();
+    const { userInfo, chats, setChats } = ChatState();
 
     const handleSearch = async (query) => {
         setSearch(query);
@@ -40,7 +40,7 @@ const GroupChatModal = ({ children }) => {
 
             const config = {
                 headers: {
-                    Authorization: `Bearer ${user.token}`,
+                    Authorization: `Bearer ${userInfo.token}`,
                 },
             };
             const { data } = await axios.get(

@@ -35,8 +35,8 @@ const SideDrawer = () => {
     const [loadingChat, setLoadingChat] = React.useState(false);
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const { user, setSelectedChat, chats, setChats } = ChatState();
-    const userData = user.data.user;
+    const { userInfo, setSelectedChat, chats, setChats } = ChatState();
+    const userData = userInfo.data.user;
 
     const navigate = useNavigate();
     const toast = useToast();
@@ -61,7 +61,7 @@ const SideDrawer = () => {
             setLoading(true);
             const config = {
                 headers: {
-                    Authorization: `Bearer ${user.token}`,
+                    Authorization: `Bearer ${userInfo.token}`,
                 },
             };
             const { data } = await axios.get(
@@ -88,7 +88,7 @@ const SideDrawer = () => {
             const config = {
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${user.token}`,
+                    Authorization: `Bearer ${userInfo.token}`,
                 },
             };
 

@@ -8,7 +8,7 @@ import ChatLoading from "./ChatLoading";
 import GroupChatModal from "./Miscellaneous/GroupChatModal";
 
 const MyChats = () => {
-    const { selectedChat, setSelectedChat, user, chats, setChats } =
+    const { selectedChat, setSelectedChat, userInfo, chats, setChats } =
         ChatState();
     const [loggedUser, setLoggedUser] = useState();
     const toast = useToast();
@@ -20,12 +20,12 @@ const MyChats = () => {
             try {
                 const config = {
                     headers: {
-                        Authorization: `Bearer ${user.token}`,
+                        Authorization: `Bearer ${userInfo.token}`,
                     },
                 };
                 const { data } = await axios.get("/api/chat", config);
                 setChats(data);
-                console.log(data);
+                // console.log(data);
             } catch (error) {
                 toast({
                     title: "Error Occurred!",
@@ -39,7 +39,7 @@ const MyChats = () => {
         };
 
         fetchChats();
-    }, [setChats, toast, user]);
+    }, [setChats, toast, userInfo]);
 
     return (
         <Box
