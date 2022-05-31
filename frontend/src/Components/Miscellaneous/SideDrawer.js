@@ -36,7 +36,6 @@ const SideDrawer = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const { user, setSelectedChat, chats, setChats } = ChatState();
-    const userData = user.data.user;
 
     const navigate = useNavigate();
     const toast = useToast();
@@ -156,12 +155,12 @@ const SideDrawer = () => {
                             <Avatar
                                 size="sm"
                                 cursor="pointer"
-                                name={userData.name}
-                                src={userData.pic}
+                                name={user.name}
+                                src={user.pic}
                             />
                         </MenuButton>
                         <MenuList>
-                            <ProfileModal user={userData}>
+                            <ProfileModal user={user}>
                                 <MenuItem>My Profile</MenuItem>
                                 {""}
                             </ProfileModal>

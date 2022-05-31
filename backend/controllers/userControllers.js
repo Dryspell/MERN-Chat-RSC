@@ -27,9 +27,7 @@ const registerUser = expressAsyncHandler(async (req, res) => {
     if (user) {
         res.status(201).json({
             status: "success",
-            data: {
-                user,
-            },
+            user,
             token: generateToken(user._id),
         });
     } else {
@@ -48,9 +46,7 @@ const authUser = expressAsyncHandler(async (req, res) => {
     if (user && (await user.matchPassword(password))) {
         res.status(200).json({
             status: "success",
-            data: {
-                user,
-            },
+            user,
             token: generateToken(user._id),
         });
     } else {
