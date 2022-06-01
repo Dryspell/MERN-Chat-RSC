@@ -7,7 +7,7 @@ import { ChatState } from "../Context/ChatProvider";
 import ChatLoading from "./ChatLoading";
 import GroupChatModal from "./Miscellaneous/GroupChatModal";
 
-const MyChats = () => {
+const MyChats = ({ fetchAgain }) => {
     const { selectedChat, setSelectedChat, userInfo, chats, setChats } =
         ChatState();
     const [loggedUser, setLoggedUser] = useState();
@@ -39,7 +39,7 @@ const MyChats = () => {
         };
 
         fetchChats();
-    }, [setChats, toast, userInfo]);
+    }, [setChats, toast, userInfo, fetchAgain]);
 
     return (
         <Box
@@ -79,7 +79,7 @@ const MyChats = () => {
                 p={3}
                 bg="#F8F8F8"
                 w="100%"
-                h="100%"
+                h="93%"
                 borderRadius="lg"
                 overflowY="hidden"
             >
