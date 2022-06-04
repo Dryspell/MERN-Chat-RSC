@@ -6,6 +6,7 @@ const colors = require("colors");
 const userRoutes = require("./routes/userRoutes");
 const minionRoutes = require("./routes/minionRoutes");
 const chatRoutes = require("./routes/chatRoutes");
+const messageRoutes = require("./routes/messageRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 
 dotenv.config();
@@ -14,12 +15,13 @@ connectDB();
 const app = express();
 app.use(express.json());
 
-app.get("/", (req, res) => {
-    res.send("API is working");
+app.get("/ping", (req, res) => {
+    res.status(200).send("pong");
 });
 
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
+app.use("/api/message", messageRoutes);
 app.use("/api/minions", minionRoutes);
 
 app.use(notFound);
