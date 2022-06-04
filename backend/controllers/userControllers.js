@@ -22,11 +22,11 @@ const registerUser = expressAsyncHandler(async (req, res) => {
         throw new Error("User already exists");
     }
 
-    const user = await User.create({ name, email, password, pic });
+    let user = await User.create({ name, email, password, pic });
 
     if (user) {
+        delete user.password;
         res.status(201).json({
-            status: "success",
             data: {
                 user,
             },
@@ -44,10 +44,10 @@ const registerUser = expressAsyncHandler(async (req, res) => {
 const authUser = expressAsyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
+    let user = await User.findOne({ email });
     if (user && (await user.matchPassword(password))) {
+        delete user.password;
         res.status(200).json({
-            status: "success",
             data: {
                 user,
             },
