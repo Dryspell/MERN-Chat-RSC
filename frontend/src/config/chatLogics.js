@@ -3,7 +3,7 @@ export const getSender = (loggedUser, users) => {
     if (loggedUser) {
         return users[0]._id === loggedUser._id ? users[1].name : users[0].name;
     } else {
-        throw new Error("Logged user not found");
+        console.log("GODHASFORSAKENYOU");
         return "GODHASFORSAKENYOU";
     }
 };
