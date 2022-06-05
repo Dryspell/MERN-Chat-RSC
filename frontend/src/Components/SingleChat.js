@@ -82,7 +82,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                     config
                 );
                 console.log(`Message Sent: ${data.message}`);
-                socket.emit("newMessage", data);
+                socket.emit("new message", data);
                 setMessages([...messages, data]);
                 setNewMessage("");
                 setLoading(false);

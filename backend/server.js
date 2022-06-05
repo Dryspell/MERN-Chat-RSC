@@ -47,14 +47,14 @@ io.on("connection", (socket) => {
     );
 
     socket.on("setup", (userData) => {
-        console.log(`${userData.name} is setting up socket`);
+        console.log(`User ${userData.name} is setting up socket`);
         socket.join(userData._id);
         socket.emit("connected");
     });
 
     socket.on("join chat", (chatId) => {
         socket.join(chatId);
-        console.log("joined room", chatId);
+        console.log("User joined room: ", chatId);
     });
 
     socket.on("new message", (newMessageReceived) => {
