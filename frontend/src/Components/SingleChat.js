@@ -5,7 +5,6 @@ import {
     IconButton,
     Input,
     Spinner,
-    Stack,
     Text,
     useToast,
 } from "@chakra-ui/react";
@@ -17,6 +16,10 @@ import UpdateGroupChatModal from "./Miscellaneous/UpdateGroupChatModal";
 import axios from "axios";
 import "./styles.css";
 import ScrollableChat from "./ScrollableChat";
+import io from "socket.io-client";
+
+const ENDPOINT = "http://localhost:5000/";
+var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const { userInfo, selectedChat, setSelectedChat } = ChatState();
@@ -25,8 +28,40 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
     const [newMessage, setNewMessage] = useState();
+    const [socketConnected, setSocketConnected] = useState(false);
 
     const toast = useToast();
+
+    useEffect(() => {
+        socket = io(ENDPOINT);
+        socket.emit("setup", userInfo.data.user);
+        socket.on("connection", () => {
+            setSocketConnected(true);
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        socket.on("message received", (newMessageReceived) => {
+            if (
+                !selectedChatCompare ||
+                selectedChatCompare._id !== newMessageReceived.chat._id
+            ) {
+                // yield Notification
+                console.log("New Message Received");
+            } else {
+                console.log(newMessageReceived);
+                setMessages([...messages, newMessageReceived]);
+            }
+        });
+    });
+
+    useEffect(() => {
+        fetchMessages();
+
+        selectedChatCompare = selectedChat;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedChat]);
 
     const sendMessage = async (e) => {
         if (e.key === "Enter" && newMessage) {
@@ -47,9 +82,12 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                     config
                 );
                 console.log(`Message Sent: ${data.message}`);
+                socket.emit("newMessage", data);
                 setMessages([...messages, data]);
                 setNewMessage("");
                 setLoading(false);
+
+                socket.emit("join chat", selectedChat._id);
             } catch (error) {
                 toast({
                     title: "Error Ocurred!",
@@ -92,11 +130,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             });
         }
     };
-
-    useEffect(() => {
-        fetchMessages();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedChat]);
 
     const typingHandler = async (e) => {
         // console.log(e.target.value);
