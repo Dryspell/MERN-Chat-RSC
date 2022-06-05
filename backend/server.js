@@ -57,6 +57,14 @@ io.on("connection", (socket) => {
         console.log("User joined room: ", chatId);
     });
 
+    socket.on("typing", (chatId) => {
+        socket.in(chatId).emit("typing", chatId);
+    });
+
+    socket.on("stop typing", (chatId) => {
+        socket.in(chatId).emit("stop typing", chatId);
+    });
+
     socket.on("new message", (newMessageReceived) => {
         var chat = newMessageReceived.chat;
         if (!chat.users) {
@@ -68,5 +76,10 @@ io.on("connection", (socket) => {
 
             socket.in(user._id).emit("message received", newMessageReceived);
         });
+    });
+
+    socket.off("setup", () => {
+        console.log("USER DISCONNECTED");
+        socket.leave(userData._id);
     });
 });
