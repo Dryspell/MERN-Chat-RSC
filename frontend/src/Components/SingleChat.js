@@ -24,7 +24,13 @@ const ENDPOINT = "http://localhost:5000/";
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
-    const { userInfo, selectedChat, setSelectedChat } = ChatState();
+    const {
+        userInfo,
+        selectedChat,
+        setSelectedChat,
+        notification,
+        setNotification,
+    } = ChatState();
     const user = userInfo?.data.user;
 
     const [messages, setMessages] = useState([]);
@@ -51,7 +57,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         socket.on("connected", () => {
             setSocketConnected(true);
         });
-        if (selectedChat) socket.emit("join chat", selectedChat._id);
 
         socket.on("typing", () => setIsTyping(true));
         socket.on("stop typing", () => setIsTyping(false));
@@ -59,13 +64,25 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     }, []);
 
     useEffect(() => {
+        selectedChatCompare && selectedChatCompare !== selectedChat
+            ? fetchMessages(false)
+            : (selectedChatCompare = selectedChat);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedChat]);
+
+    useEffect(() => {
         socket.on("message received", (newMessageReceived) => {
             if (
                 !selectedChatCompare ||
                 selectedChatCompare._id !== newMessageReceived.chat._id
             ) {
-                // yield Notification
-                console.log("New Message Received");
+                if (!notification.includes(newMessageReceived)) {
+                    setNotification([newMessageReceived, ...notification]);
+                    setFetchAgain(!fetchAgain);
+                    console.log(
+                        `New Message Received in other chat from User: ${newMessageReceived.sender._id}`
+                    );
+                }
             } else {
                 console.log(
                     `${newMessageReceived.createdAt}: ${newMessageReceived.sender.name} has sent message: ${newMessageReceived.message}`
@@ -74,14 +91,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             }
         });
     });
-
-    useEffect(() => {
-        fetchMessages(false);
-        if (selectedChat) socket.emit("join chat", selectedChat._id);
-
-        selectedChatCompare = selectedChat;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedChat]);
 
     const sendMessage = async (e) => {
         if (e.key === "Enter" && newMessage) {
@@ -141,6 +150,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             console.log(data);
             setMessages(data);
             setLoading(false);
+
+            socket.emit("join chat", selectedChat._id);
         } catch (error) {
             toast({
                 title: "Error Occured!",
