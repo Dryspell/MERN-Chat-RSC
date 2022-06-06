@@ -46,8 +46,9 @@ const SideDrawer = () => {
         navigate("/");
     };
 
-    const handleSearch = async () => {
-        if (!search) {
+    const handleSearch = async (e) => {
+        setSearch(e.target.value);
+        if (!search && !e.target.value) {
             toast({
                 title: "Please enter a search query",
                 status: "warning",
@@ -185,7 +186,7 @@ const SideDrawer = () => {
                                     mr={2}
                                     value={search}
                                     onChange={(e) => {
-                                        setSearch(e.target.value);
+                                        handleSearch(e);
                                     }}
                                 />
                                 <Button onClick={handleSearch}>Go</Button>

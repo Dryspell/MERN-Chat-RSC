@@ -20,15 +20,6 @@ import io from "socket.io-client";
 import Lottie from "react-lottie";
 import animationData from "../animations/typing.json";
 
-const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: animationData,
-    rendererSettings: {
-        preserveAspectRatio: "xMidYMid slice",
-    },
-};
-
 const ENDPOINT = "http://localhost:5000/";
 var socket, selectedChatCompare;
 
@@ -45,12 +36,23 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
     const toast = useToast();
 
+    const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: animationData,
+        rendererSettings: {
+            preserveAspectRatio: "xMidYMid slice",
+        },
+    };
+
     useEffect(() => {
         socket = io(ENDPOINT);
         socket.emit("setup", userInfo.data.user);
         socket.on("connected", () => {
             setSocketConnected(true);
         });
+        if (selectedChat) socket.emit("join chat", selectedChat._id);
+
         socket.on("typing", () => setIsTyping(true));
         socket.on("stop typing", () => setIsTyping(false));
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,14 +67,17 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 // yield Notification
                 console.log("New Message Received");
             } else {
-                console.log(newMessageReceived);
+                console.log(
+                    `${newMessageReceived.createdAt}: ${newMessageReceived.sender.name} has sent message: ${newMessageReceived.message}`
+                );
                 setMessages([...messages, newMessageReceived]);
             }
         });
     });
 
     useEffect(() => {
-        fetchMessages();
+        fetchMessages(false);
+        if (selectedChat) socket.emit("join chat", selectedChat._id);
 
         selectedChatCompare = selectedChat;
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -119,11 +124,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         }
     };
 
-    const fetchMessages = async () => {
+    const fetchMessages = async (backgroundLoad) => {
         if (!selectedChat) return;
         console.log("Fetching Messages");
         try {
-            setLoading(true);
+            if (!backgroundLoad) setLoading(true);
             const config = {
                 headers: {
                     Authorization: `Bearer ${userInfo.token}`,
@@ -202,7 +207,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                             <>
                                 {selectedChat.chatName.toUpperCase()}
                                 <UpdateGroupChatModal
-                                    fetchMessages={fetchMessages}
+                                    fetchMessages={fetchMessages(false)}
                                     fetchAgain={fetchAgain}
                                     setFetchAgain={setFetchAgain}
                                 />
