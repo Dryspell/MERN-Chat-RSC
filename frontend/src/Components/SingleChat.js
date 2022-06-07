@@ -17,7 +17,7 @@ import axios from "axios";
 import "./styles.css";
 import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
-import Lottie from "react-lottie";
+// import Lottie from "react-lottie";
 import animationData from "../animations/typing.json";
 
 const ENDPOINT = "https://hay-boi.herokuapp.com/"; //"http://localhost:5000/";
@@ -261,14 +261,15 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                         >
                             {isTyping ? (
                                 <div>
-                                    <Lottie
+                                    Typing....
+                                    {/* <Lottie
                                         options={defaultOptions}
                                         style={{
                                             marginBottom: 15,
                                             marginLeft: 0,
                                         }}
                                         width={70}
-                                    />
+                                    /> */}
                                 </div>
                             ) : (
                                 <></>

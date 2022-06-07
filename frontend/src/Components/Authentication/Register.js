@@ -6,6 +6,7 @@ import { useToast } from "@chakra-ui/toast";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import React from "react";
 
 const Signup = () => {
     const [show, setShow] = useState(false);
