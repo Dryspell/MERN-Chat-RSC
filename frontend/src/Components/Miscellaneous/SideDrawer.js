@@ -18,7 +18,6 @@ import {
     Tooltip,
     useDisclosure,
     Spinner,
-    effect,
 } from "@chakra-ui/react";
 import { BellIcon, ChevronDownIcon, Search2Icon } from "@chakra-ui/icons";
 import React from "react";
