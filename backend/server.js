@@ -8,6 +8,7 @@ const minionRoutes = require("./routes/minionRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
+const path = require("path");
 
 dotenv.config();
 connectDB();
@@ -23,6 +24,25 @@ app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
 app.use("/api/minions", minionRoutes);
+
+// --------------------------------------------------
+// ---------------  Deployment  ---------------
+const __dirname1 = path.resolve();
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname1, "/frontend/build")));
+
+    app.get("*", (req, res) => {
+        res.sendFile(
+            path.resolve(__dirname1, "frontend", "build", "index.html")
+        );
+    });
+} else {
+    app.get("/", (req, res) => {
+        res.send("API is Running Successfully");
+    });
+}
+
+// --------------------------------------------------
 
 app.use(notFound);
 app.use(errorHandler);

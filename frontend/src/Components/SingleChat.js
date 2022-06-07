@@ -64,9 +64,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     }, []);
 
     useEffect(() => {
-        selectedChatCompare && selectedChatCompare !== selectedChat
-            ? fetchMessages(false)
-            : (selectedChatCompare = selectedChat);
+        if (selectedChatCompare && selectedChatCompare !== selectedChat) {
+            fetchMessages(false);
+        } else {
+            selectedChatCompare = selectedChat;
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedChat]);
 
