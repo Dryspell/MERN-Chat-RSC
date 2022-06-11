@@ -202,87 +202,86 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
         }
     };
 
-    // return (
-    //     <>
-    //         <IconButton
-    //             display={{ base: "flex" }}
-    //             icon={<ViewIcon />}
-    //             onClick={onOpen}
-    //         />
+    return (
+        <>
+            <IconButton
+                display={{ base: "flex" }}
+                icon={<ViewIcon />}
+                onClick={onOpen}
+            />
 
-    //         <Modal isOpen={isOpen} onClose={onClose}>
-    //             <ModalOverlay />
-    //             <ModalContent>
-    //                 <ModalHeader
-    //                     fontSize="35px"
-    //                     fontFamily="Work sans"
-    //                     display="flex"
-    //                     justifyContent="center"
-    //                 >
-    //                     {selectedChat.chatName}
-    //                 </ModalHeader>
-    //                 <ModalCloseButton />
-    //                 <ModalBody>
-    //                     <Box display="flex" w={"100%"} flexWrap="wrap" pb={3}>
-    //                         {selectedChat.users.map((u) => (
-    //                             <UserBadgeItem
-    //                                 key={u._id}
-    //                                 user={u}
-    //                                 handleFunction={() => handleRemove(u)}
-    //                             />
-    //                         ))}
-    //                     </Box>
-    //                     <FormControl display="flex">
-    //                         <Input
-    //                             placeholder="Chat Name"
-    //                             mb={3}
-    //                             onChange={(e) =>
-    //                                 setGroupChatName(e.target.value)
-    //                             }
-    //                         />
-    //                         <Button
-    //                             variant="solid"
-    //                             colorScheme="teal"
-    //                             isLoading={renameLoading}
-    //                             onClick={handleRename}
-    //                             ml={1}
-    //                         >
-    //                             Update
-    //                         </Button>
-    //                     </FormControl>
-    //                     <FormControl>
-    //                         <Input
-    //                             placeholder="Add Users eg. Peter, Paul, Mary"
-    //                             mb={1}
-    //                             onChange={(e) => handleSearch(e.target.value)}
-    //                         />
-    //                     </FormControl>
-    //                     {loading ? (
-    //                         <Spinner size="lg" />
-    //                     ) : (
-    //                         searchResult?.map((u) => (
-    //                             <UserListItem
-    //                                 key={u._id}
-    //                                 user={u}
-    //                                 handleFunction={() => handleAddUser(u)}
-    //                             />
-    //                         ))
-    //                     )}
-    //                 </ModalBody>
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader
+                        fontSize="35px"
+                        fontFamily="Work sans"
+                        display="flex"
+                        justifyContent="center"
+                    >
+                        {selectedChat.chatName}
+                    </ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <Box display="flex" w={"100%"} flexWrap="wrap" pb={3}>
+                            {selectedChat.users.map((u) => (
+                                <UserBadgeItem
+                                    key={u._id}
+                                    user={u}
+                                    handleFunction={() => handleRemove(u)}
+                                />
+                            ))}
+                        </Box>
+                        <FormControl display="flex">
+                            <Input
+                                placeholder="Chat Name"
+                                mb={3}
+                                onChange={(e) =>
+                                    setGroupChatName(e.target.value)
+                                }
+                            />
+                            <Button
+                                variant="solid"
+                                colorScheme="teal"
+                                isLoading={renameLoading}
+                                onClick={handleRename}
+                                ml={1}
+                            >
+                                Update
+                            </Button>
+                        </FormControl>
+                        <FormControl>
+                            <Input
+                                placeholder="Add Users eg. Peter, Paul, Mary"
+                                mb={1}
+                                onChange={(e) => handleSearch(e.target.value)}
+                            />
+                        </FormControl>
+                        {loading ? (
+                            <Spinner size="lg" />
+                        ) : (
+                            searchResult?.map((u) => (
+                                <UserListItem
+                                    key={u._id}
+                                    user={u}
+                                    handleFunction={() => handleAddUser(u)}
+                                />
+                            ))
+                        )}
+                    </ModalBody>
 
-    //                 <ModalFooter>
-    //                     <Button
-    //                         onClick={() => handleRemove(userInfo.data.user)}
-    //                         colorScheme="red"
-    //                     >
-    //                         Leave Group
-    //                     </Button>
-    //                 </ModalFooter>
-    //             </ModalContent>
-    //         </Modal>
-    //     </>
-    // );
-    return;
+                    <ModalFooter>
+                        <Button
+                            onClick={() => handleRemove(userInfo.data.user)}
+                            colorScheme="red"
+                        >
+                            Leave Group
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+        </>
+    );
 };
 
 export default UpdateGroupChatModal;

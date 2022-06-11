@@ -124,131 +124,129 @@ const SideDrawer = () => {
         }
     };
 
-    // return (
-    //     <>
-    //         <Box
-    //             display="flex"
-    //             justifyContent="space-between"
-    //             alignItems="center"
-    //             bg="white"
-    //             w="100%"
-    //             p="5px 10px 5px 10px"
-    //             borderWidth="5px"
-    //         >
-    //             <Tooltip
-    //                 label="Search Users to Chat"
-    //                 hasArrow
-    //                 placement="bottom-end"
-    //             >
-    //                 <Button variant="ghost" onClick={onOpen}>
-    //                     <Search2Icon />
-    //                     <Text d={{ base: "none", md: "flex" }} px="4">
-    //                         Search Users
-    //                     </Text>
-    //                 </Button>
-    //             </Tooltip>
+    return (
+        <>
+            <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                bg="white"
+                w="100%"
+                p="5px 10px 5px 10px"
+                borderWidth="5px"
+            >
+                <Tooltip
+                    label="Search Users to Chat"
+                    hasArrow
+                    placement="bottom-end"
+                >
+                    <Button variant="ghost" onClick={onOpen}>
+                        <Search2Icon />
+                        <Text d={{ base: "none", md: "flex" }} px="4">
+                            Search Users
+                        </Text>
+                    </Button>
+                </Tooltip>
 
-    //             <Text
-    //                 fontSize="2xl"
-    //                 fontFamily="Work sans"
-    //                 fontWeight={"extrabold"}
-    //             >
-    //                 Hay-Boi
-    //             </Text>
-    //             <div>
-    //                 <Menu>
-    //                     <MenuButton p={1}>
-    //                         {/* <NotificationBadge
-    //                             count={notification.length}
-    //                             effect={Effect.SCALE}
-    //                         /> */}
-    //                         <BellIcon fontSize="2xl" m={1} />
-    //                     </MenuButton>
-    //                     <MenuList pl={2}>
-    //                         {!notification.length && "No New Messages"}
-    //                         {notification.map((notif) => (
-    //                             <MenuItem
-    //                                 key={notif._id}
-    //                                 onClick={() => {
-    //                                     setSelectedChat(notif.chat);
-    //                                     setNotification(
-    //                                         notification.filter(
-    //                                             (n) => n !== notif
-    //                                         )
-    //                                     );
-    //                                 }}
-    //                             >
-    //                                 {notif.chat.isGroupChat
-    //                                     ? `New Message in ${notif.chat.chatName}`
-    //                                     : `New Message from ${getSender(
-    //                                           userInfo.data.user,
-    //                                           notif.chat.users
-    //                                       )}`}
-    //                             </MenuItem>
-    //                         ))}
-    //                     </MenuList>
-    //                 </Menu>
-    //                 <Menu>
-    //                     <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-    //                         <Avatar
-    //                             size="sm"
-    //                             cursor="pointer"
-    //                             name={userData.name}
-    //                             src={userData.pic}
-    //                         />
-    //                     </MenuButton>
-    //                     <MenuList>
-    //                         <ProfileModal user={userData}>
-    //                             <MenuItem>My Profile</MenuItem>
-    //                             {""}
-    //                         </ProfileModal>
-    //                         <MenuDivider />
-    //                         <MenuItem onClick={logoutHandler}>Log Out</MenuItem>
-    //                     </MenuList>
-    //                 </Menu>
-    //             </div>
-    //         </Box>
+                <Text
+                    fontSize="2xl"
+                    fontFamily="Work sans"
+                    fontWeight={"extrabold"}
+                >
+                    Hay-Boi
+                </Text>
+                <div>
+                    <Menu>
+                        <MenuButton p={1}>
+                            {/* <NotificationBadge
+                                count={notification.length}
+                                effect={Effect.SCALE}
+                            /> */}
+                            <BellIcon fontSize="2xl" m={1} />
+                        </MenuButton>
+                        <MenuList pl={2}>
+                            {!notification.length && "No New Messages"}
+                            {notification.map((notif) => (
+                                <MenuItem
+                                    key={notif._id}
+                                    onClick={() => {
+                                        setSelectedChat(notif.chat);
+                                        setNotification(
+                                            notification.filter(
+                                                (n) => n !== notif
+                                            )
+                                        );
+                                    }}
+                                >
+                                    {notif.chat.isGroupChat
+                                        ? `New Message in ${notif.chat.chatName}`
+                                        : `New Message from ${getSender(
+                                              userInfo.data.user,
+                                              notif.chat.users
+                                          )}`}
+                                </MenuItem>
+                            ))}
+                        </MenuList>
+                    </Menu>
+                    <Menu>
+                        <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                            <Avatar
+                                size="sm"
+                                cursor="pointer"
+                                name={userData.name}
+                                src={userData.pic}
+                            />
+                        </MenuButton>
+                        <MenuList>
+                            <ProfileModal user={userData}>
+                                <MenuItem>My Profile</MenuItem>
+                                {""}
+                            </ProfileModal>
+                            <MenuDivider />
+                            <MenuItem onClick={logoutHandler}>Log Out</MenuItem>
+                        </MenuList>
+                    </Menu>
+                </div>
+            </Box>
 
-    //         <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
-    //             <DrawerOverlay>
-    //                 <DrawerContent>
-    //                     <DrawerHeader borderBottomWidth={"1px"}>
-    //                         Search Users
-    //                     </DrawerHeader>
-    //                     <DrawerBody>
-    //                         <Box display={"flex"} pb={2}>
-    //                             <Input
-    //                                 placeholder="Search by Name or Email"
-    //                                 mr={2}
-    //                                 value={search}
-    //                                 onChange={(e) => {
-    //                                     handleSearch(e);
-    //                                 }}
-    //                             />
-    //                             <Button onClick={handleSearch}>Go</Button>
-    //                         </Box>
-    //                         {loading ? (
-    //                             <ChatLoading />
-    //                         ) : (
-    //                             searchResult?.map((user) => (
-    //                                 <UserListItem
-    //                                     key={user._id}
-    //                                     user={user}
-    //                                     handleFunction={() =>
-    //                                         accessChat(user._id)
-    //                                     }
-    //                                 />
-    //                             ))
-    //                         )}
-    //                         {loadingChat && <Spinner ml="auto" d="flex" />}
-    //                     </DrawerBody>
-    //                 </DrawerContent>
-    //             </DrawerOverlay>
-    //         </Drawer>
-    //     </>
-    // );
-
-    return;
+            <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
+                <DrawerOverlay>
+                    <DrawerContent>
+                        <DrawerHeader borderBottomWidth={"1px"}>
+                            Search Users
+                        </DrawerHeader>
+                        <DrawerBody>
+                            <Box display={"flex"} pb={2}>
+                                <Input
+                                    placeholder="Search by Name or Email"
+                                    mr={2}
+                                    value={search}
+                                    onChange={(e) => {
+                                        handleSearch(e);
+                                    }}
+                                />
+                                <Button onClick={handleSearch}>Go</Button>
+                            </Box>
+                            {loading ? (
+                                <ChatLoading />
+                            ) : (
+                                searchResult?.map((user) => (
+                                    <UserListItem
+                                        key={user._id}
+                                        user={user}
+                                        handleFunction={() =>
+                                            accessChat(user._id)
+                                        }
+                                    />
+                                ))
+                            )}
+                            {loadingChat && <Spinner ml="auto" d="flex" />}
+                        </DrawerBody>
+                    </DrawerContent>
+                </DrawerOverlay>
+            </Drawer>
+        </>
+    );
 };
 
 export default SideDrawer;
