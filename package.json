@@ -8,7 +8,7 @@
     "scripts": {
         "start": "node backend/server.js",
         "server": "nodemon backend/server.js",
-        "heroku-postbuild": "cd frontend && npm install && npm run build"
+        "heroku-postbuild": "cd frontend && npm install --force && npm run build"
     },
     "author": "",
     "license": "ISC",

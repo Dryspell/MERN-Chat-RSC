@@ -186,8 +186,8 @@ const GroupChatModal = ({ children }) => {
                                 loading
                                 <Spinner pl={3} ml="auto" display="flex" />
                             </div>
-                        ) : (
-                            searchResult?.slice(0, 4).map((user) => (
+                        ) : searchResult ? (
+                            searchResult.slice(0, 4).map((user) => (
                                 <UserListItem
                                     key={user._id}
                                     user={user}
@@ -196,7 +196,7 @@ const GroupChatModal = ({ children }) => {
                                     }}
                                 />
                             ))
-                        )}
+                        ) : null}
                     </ModalBody>
 
                     <ModalFooter>

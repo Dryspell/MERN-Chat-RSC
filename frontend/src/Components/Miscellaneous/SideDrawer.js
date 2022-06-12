@@ -229,8 +229,8 @@ const SideDrawer = () => {
                             </Box>
                             {loading ? (
                                 <ChatLoading />
-                            ) : (
-                                searchResult?.map((user) => (
+                            ) : searchResult ? (
+                                searchResult.map((user) => (
                                     <UserListItem
                                         key={user._id}
                                         user={user}
@@ -239,7 +239,7 @@ const SideDrawer = () => {
                                         }
                                     />
                                 ))
-                            )}
+                            ) : null}
                             {loadingChat && <Spinner ml="auto" d="flex" />}
                         </DrawerBody>
                     </DrawerContent>

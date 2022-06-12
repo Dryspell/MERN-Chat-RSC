@@ -31,7 +31,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         notification,
         setNotification,
     } = ChatState();
-    const user = userInfo?.data.user;
+    const user = userInfo ? userInfo.data.user : null;
 
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
