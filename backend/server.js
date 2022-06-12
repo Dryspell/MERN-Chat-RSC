@@ -16,6 +16,15 @@ connectDB();
 const app = express();
 app.use(express.json());
 
+app.get("/ping", (req, res) => {
+    res.status(200).send("pong");
+});
+
+app.use("/api/user", userRoutes);
+app.use("/api/chat", chatRoutes);
+app.use("/api/message", messageRoutes);
+app.use("/api/minions", minionRoutes);
+
 // --------------------------------------------------
 // ---------------  Deployment  ---------------
 const __dirname1 = path.resolve();
@@ -34,15 +43,6 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // --------------------------------------------------
-
-app.get("/ping", (req, res) => {
-    res.status(200).send("pong");
-});
-
-app.use("/api/user", userRoutes);
-app.use("/api/chat", chatRoutes);
-app.use("/api/message", messageRoutes);
-app.use("/api/minions", minionRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
