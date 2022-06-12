@@ -142,7 +142,7 @@ const SideDrawer = () => {
                 >
                     <Button variant="ghost" onClick={onOpen}>
                         <Search2Icon />
-                        <Text d={{ base: "none", md: "flex" }} px="4">
+                        <Text display={{ base: "none", md: "flex" }} px="4">
                             Search Users
                         </Text>
                     </Button>
@@ -240,7 +240,9 @@ const SideDrawer = () => {
                                     />
                                 ))
                             ) : null}
-                            {loadingChat && <Spinner ml="auto" d="flex" />}
+                            {loadingChat && (
+                                <Spinner ml="auto" display="flex" />
+                            )}
                         </DrawerBody>
                     </DrawerContent>
                 </DrawerOverlay>
