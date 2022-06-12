@@ -49,18 +49,19 @@ const authUser = expressAsyncHandler(async (req, res) => {
     if (user && (await user.matchPassword(password))) {
         console.log(`User ${user.email} authenticated`);
         delete user.password;
-        return res.status(200).json({
+        res.status(200).json({
             data: {
                 user,
             },
             token: generateToken(user._id),
         });
+        console.log(res);
     } else {
         if (!user) {
             console.log(
                 `User ${req.body.email} failed to authenticate; User does not exist`
             );
-            return res.status(400).json({
+            res.status(400).json({
                 status: "error",
                 message: "User does not exist",
             });
@@ -68,7 +69,7 @@ const authUser = expressAsyncHandler(async (req, res) => {
             console.log(
                 `User ${req.body.email} failed to authenticate; Password incorrect`
             );
-        return res.status(400).json({
+        res.status(400).json({
             status: "error",
             message: "Incorrect password",
         });
