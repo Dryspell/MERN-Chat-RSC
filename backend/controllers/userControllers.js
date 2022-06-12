@@ -47,7 +47,8 @@ const authUser = expressAsyncHandler(async (req, res) => {
 
     let user = await User.findOne({ email });
     if (user && (await user.matchPassword(password))) {
-        delete user.password;
+        console.log(`User ${user.email} authenticated`);
+        // delete user.password;
         res.status(200).json({
             data: {
                 user,
@@ -56,15 +57,21 @@ const authUser = expressAsyncHandler(async (req, res) => {
         });
     } else {
         if (!user) {
+            console.log(
+                `User ${req.body.email} failed to authenticate; User does not exist`
+            );
             return res.status(400).json({
                 status: "error",
                 message: "User does not exist",
             });
         } else
-            return res.status(400).json({
-                status: "error",
-                message: "Incorrect password",
-            });
+            console.log(
+                `User ${req.body.email} failed to authenticate; Password incorrect`
+            );
+        return res.status(400).json({
+            status: "error",
+            message: "Incorrect password",
+        });
     }
 });
 
