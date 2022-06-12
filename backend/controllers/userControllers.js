@@ -48,8 +48,8 @@ const authUser = expressAsyncHandler(async (req, res) => {
     let user = await User.findOne({ email });
     if (user && (await user.matchPassword(password))) {
         console.log(`User ${user.email} authenticated`);
-        // delete user.password;
-        res.status(200).json({
+        delete user.password;
+        return res.status(200).json({
             data: {
                 user,
             },
