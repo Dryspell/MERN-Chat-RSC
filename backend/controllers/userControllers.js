@@ -48,14 +48,14 @@ const authUser = expressAsyncHandler(async (req, res) => {
     let user = await User.findOne({ email });
     if (user && (await user.matchPassword(password))) {
         console.log(`User ${user.email} authenticated`);
-        delete user.password;
+        // delete user.password;
+        console.log(`Made token: ${generateToken(user._id)}`);
         res.status(200).json({
             data: {
                 user,
             },
             token: generateToken(user._id),
         });
-        console.log(res);
     } else {
         if (!user) {
             console.log(
