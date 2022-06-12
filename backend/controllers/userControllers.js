@@ -42,6 +42,7 @@ const registerUser = expressAsyncHandler(async (req, res) => {
 });
 
 const authUser = expressAsyncHandler(async (req, res) => {
+    console.log(`Attempting to authenticate user: ${req.body.email}`);
     const { email, password } = req.body;
 
     let user = await User.findOne({ email });
