@@ -19,9 +19,8 @@ import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
 import Lottie from "react-lottie";
 import animationData from "../animations/typing.json";
-const path = require("path");
-
-console.log(path.resolve());
+// const path = require("path");
+// console.log(path.resolve());
 
 const ENDPOINT =
     process.env.NODE_ENV === "production"
@@ -71,6 +70,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
     useEffect(() => {
         if (selectedChatCompare && selectedChatCompare !== selectedChat) {
+            socket.emit("join chat", selectedChat._id);
+
             fetchMessages(false);
         } else {
             selectedChatCompare = selectedChat;
@@ -124,6 +125,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 socket.emit("new message", data);
                 setMessages([...messages, data]);
                 setNewMessage("");
+                setFetchAgain(!fetchAgain);
                 setLoading(false);
 
                 socket.emit("join chat", selectedChat._id);
@@ -275,7 +277,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                         >
                             {isTyping ? (
                                 <div>
-                                    Typing....
                                     <Lottie
                                         options={defaultOptions}
                                         style={{
