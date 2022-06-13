@@ -40,7 +40,7 @@ const MyChats = ({ fetchAgain }) => {
 
         fetchChats();
         // eslint-disable-next-line
-    }, [fetchAgain]);
+    }, [fetchAgain, selectedChat]);
 
     return (
         <Box
