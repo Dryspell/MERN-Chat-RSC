@@ -17,8 +17,11 @@ import axios from "axios";
 import "./styles.css";
 import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
-// import Lottie from "react-lottie";
+import Lottie from "react-lottie";
 import animationData from "../animations/typing.json";
+const path = require("path");
+
+console.log(path.resolve());
 
 const ENDPOINT =
     process.env.NODE_ENV === "production"
@@ -60,7 +63,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         socket.on("connected", () => {
             setSocketConnected(true);
         });
-
+        fetchMessages(true);
         socket.on("typing", () => setIsTyping(true));
         socket.on("stop typing", () => setIsTyping(false));
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -265,14 +268,14 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                             {isTyping ? (
                                 <div>
                                     Typing....
-                                    {/* <Lottie
+                                    <Lottie
                                         options={defaultOptions}
                                         style={{
                                             marginBottom: 15,
                                             marginLeft: 0,
                                         }}
                                         width={70}
-                                    /> */}
+                                    />
                                 </div>
                             ) : (
                                 <></>

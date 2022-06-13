@@ -1,4 +1,5 @@
 const expressAsyncHandler = require("express-async-handler");
+const { Mongoose } = require("mongoose");
 const Chat = require("../models/chatModel");
 const User = require("../models/userModel");
 
@@ -131,7 +132,7 @@ const createGroupChat = expressAsyncHandler(async (req, res) => {
 
 const renameGroupChat = expressAsyncHandler(async (req, res) => {
     const { chatId, chatName } = req.body;
-
+    Mongoose.set("useFindAndModify", false);
     const updatedChat = await Chat.findOneAndUpdate(
         { _id: chatId },
         { chatName: chatName },
