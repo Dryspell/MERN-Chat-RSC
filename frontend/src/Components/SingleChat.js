@@ -172,6 +172,14 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         }
     };
 
+    useEffect(
+        async () => {
+            fetchMessages(true);
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [fetchAgain]
+    );
+
     const typingHandler = async (e) => {
         setNewMessage(e.target.value);
 
