@@ -71,11 +71,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     useEffect(() => {
         if (selectedChatCompare && selectedChatCompare !== selectedChat) {
             socket.emit("join chat", selectedChat._id);
-
-            fetchMessages(false);
         } else {
             selectedChatCompare = selectedChat;
         }
+        fetchMessages(false);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedChat]);
 
@@ -127,6 +126,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 setMessages([...messages, data]);
                 setNewMessage("");
                 setFetchAgain(!fetchAgain);
+                fetchMessages(false);
                 setLoading(false);
 
                 socket.emit("join chat", selectedChat._id);
@@ -144,7 +144,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         }
     };
 
-    const fetchMessages = async (backgroundLoad) => {
+    const fetchMessages = async (backgroundLoad = false) => {
         if (!selectedChat) return;
         console.log("Fetching Messages");
         try {
